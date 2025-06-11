@@ -1,30 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "jogador_17018992.h"
+#include "jogador_curto.h"
 
-// Variáveis globais para armazenar o estado do jogador
+// ===== // Variáveis globais // ===== //
+
 static int id_jogador_global;
 static int num_jogadores_global;
 static Carta mao_global[6];
 static int num_cartas_global;
 static Valor manilha_atual_global;
 static int quantidade_de_manilhas_minha_global;
-static int cartas_jogadas[6] = {0}; // Controle de cartas jogadas
+static int cartas_jogadas[6] = {0};
 
-void atualiza_quantidade_de_manilhas() {
-    quantidade_de_manilhas_minha_global = 0;
-    for (int i = 0; i < num_cartas_global; i++) {
-        // Só conta manilhas que não foram jogadas
-        if (mao_global[i].valor == manilha_atual_global && cartas_jogadas[i] == 0)
-            quantidade_de_manilhas_minha_global++;
-    }
-}
+// ===== // Funções auxiliares // ===== //
 
 // Marca carta como usada
 void joga_carta(int idx) {
     if (idx >= 0 && idx < num_cartas_global) {
-        // Se for manilha atualiza o contador
+        // Se for manilha atualiza o contador de manilhas
         if (mao_global[idx].valor == manilha_atual_global && cartas_jogadas[idx] == 0) {
             if(quantidade_de_manilhas_minha_global > 0)
                 quantidade_de_manilhas_minha_global--;
@@ -34,44 +28,19 @@ void joga_carta(int idx) {
     }
 }
 
-const char* nome_jogador_17018992() {
-    return "Luiz Eduardo";
-}
-
-void iniciar_17018992(int meu_id, int total_jogadores) {
-    id_jogador_global = meu_id;
-    num_jogadores_global = total_jogadores;
-    // Reinicia o contador de cartas usadas
-    for (int i = 0; i < 6; i++) {
-        cartas_jogadas[i] = 0;
-    }
-}
-
-void nova_rodada_17018992(int rodada, Carta carta_virada, int n_cartas, Carta* minha_mao) {
-    num_cartas_global = n_cartas;
-
-    // Seta a manilha atual
-    manilha_atual_global = (carta_virada.valor == TRES) ? QUATRO : (Valor)(carta_virada.valor + 1);
-
-    // Reinicia o contador de cartas usadas
-    for (int i = 0; i < 6; i++) {
-        cartas_jogadas[i] = 0;
-    }
-
-   // Seta a minha mao atual
+// Calcula a quantidade de manilhas na mão do jogador
+// Atualiza a variável global quantidade_de_manilhas_minha_global
+void atualiza_quantidade_de_manilhas() {
+    quantidade_de_manilhas_minha_global = 0;
     for (int i = 0; i < num_cartas_global; i++) {
-        mao_global[i] = minha_mao[i];
+        // Só conta manilhas que não foram jogadas
+        if (mao_global[i].valor == manilha_atual_global && cartas_jogadas[i] == 0)
+            quantidade_de_manilhas_minha_global++;
     }
-
-    atualiza_quantidade_de_manilhas();
 }
 
-// Aposta sempre a quantidade de manilha que tenho na rodada
-int apostar_17018992(const int* apostas) {
-    atualiza_quantidade_de_manilhas();
-    return quantidade_de_manilhas_minha_global;
-}
-
+// Retorna o índice da manilha mais forte na mesa
+// Retorna -1 se não houver manilha na mesa
 int manilha_mais_forte_da_mesa(const Carta* mesa, int num_na_mesa) {
     int idx = -1;
     for (int i = 0; i < num_na_mesa; i++) {
@@ -84,6 +53,7 @@ int manilha_mais_forte_da_mesa(const Carta* mesa, int num_na_mesa) {
     return idx;
 }
 
+// Retorna o índice da carta (não-manilha) mais forte na mesa
 int nao_manilha_mais_forte_da_mesa(const Carta* mesa, int num_na_mesa) {
     int idx = -1;
     for (int i = 0; i < num_na_mesa; i++) {
@@ -95,18 +65,9 @@ int nao_manilha_mais_forte_da_mesa(const Carta* mesa, int num_na_mesa) {
     return idx;
 }
 
-int maior_carta_sem_ser_manilha(Carta* mao_jogador, int num_cartas_jogador) {
-    int idx = -1;
-    for (int i = 0; i < num_cartas_jogador; i++) {
-        if (cartas_jogadas[i]) continue;
-        if (mao_jogador[i].valor == manilha_atual_global) continue;
-        if (idx == -1 || mao_jogador[i].valor > mao_jogador[idx].valor) {
-            idx = i;
-        }
-    }
-    return idx;
-}
-
+// Nunca é chamada se tem manilha na mesa
+// Retorna o índice da maior carta na mão do jogador que é menor ou igual à maior carta na mesa
+// Se não houver, retorna -1
 int maior_carta_menor_igual_do_que_a_mesa(Carta* mao_jogador, int num_cartas_jogador, const Carta* mesa, int num_na_mesa) {
     int idx = -1;
     int mais_forte_na_mesa_idx = nao_manilha_mais_forte_da_mesa(mesa, num_na_mesa);
@@ -126,6 +87,22 @@ int maior_carta_menor_igual_do_que_a_mesa(Carta* mao_jogador, int num_cartas_jog
     return idx;
 }
 
+// Retorna o índice da maior carta (sem ser manilha) na mão do jogador
+// Se não houver, retorna -1
+int maior_carta_sem_ser_manilha(Carta* mao_jogador, int num_cartas_jogador) {
+    int idx = -1;
+    for (int i = 0; i < num_cartas_jogador; i++) {
+        if (cartas_jogadas[i]) continue;
+        if (mao_jogador[i].valor == manilha_atual_global) continue;
+        if (idx == -1 || mao_jogador[i].valor > mao_jogador[idx].valor) {
+            idx = i;
+        }
+    }
+    return idx;
+}
+
+// Retorna o índice da menor carta (sem ser manilha) na mão do jogador
+// Se não houver, retorna -1
 int menor_carta_sem_ser_manilha(Carta* mao_jogador, int num_cartas_jogador) {
     int idx = -1;
     for (int i = 0; i < num_cartas_jogador; i++) {
@@ -139,6 +116,68 @@ int menor_carta_sem_ser_manilha(Carta* mao_jogador, int num_cartas_jogador) {
     return idx;
 }
 
+// ===== // Funções do Jogador // ====== //
+
+// Retorna o ID do jogador
+const char* nome_jogador_17018992() {
+    return "Luiz Eduardo";
+}
+
+// Prepara o jogador para iniciar o jogo
+void iniciar_17018992(int meu_id, int total_jogadores) {
+    id_jogador_global = meu_id;
+    num_jogadores_global = total_jogadores;
+    // Reinicia o contador de cartas usadas
+    for (int i = 0; i < 6; i++) {
+        cartas_jogadas[i] = 0;
+    }
+}
+
+// Prepara a rodada para o jogador
+void nova_rodada_17018992(int rodada, Carta carta_virada, int n_cartas, Carta* minha_mao) {
+    num_cartas_global = n_cartas;
+
+    // Seta a manilha atual
+    manilha_atual_global = (carta_virada.valor == TRES) ? QUATRO : (Valor)(carta_virada.valor + 1);
+
+    // Reinicia o contador de cartas usadas
+    for (int i = 0; i < 6; i++) {
+        cartas_jogadas[i] = 0;
+    }
+
+    // Seta a minha mao atual
+    for (int i = 0; i < num_cartas_global; i++) {
+        mao_global[i] = minha_mao[i];
+    }
+
+    atualiza_quantidade_de_manilhas();
+}
+
+// Escolhe quantas maos o jogador aposta na rodada
+/*
+ Estrategia de jogo:
+ Apostar a quantidade de manilhas que o jogador tem na mão.
+*/
+int apostar_17018992(const int* apostas) {
+    atualiza_quantidade_de_manilhas();
+    return quantidade_de_manilhas_minha_global;
+}
+
+// Escolhe qual carta jogar na rodada.
+/*
+ Estrategia de jogo:
+ Se houver manilha na mesa:
+ - Tenta jogar uma manilha mais forte, se possível.
+ - Caso contrario, descarta a menor carta não-manilha.
+ - Se só restarem manilhas na mao (mais fracas que a da mesa), joga a mais fraca.
+ Se não houver manilha na mesa:
+ - Tenta jogar a maior carta menor ou igual a carta mais forte da mesa
+ - Se não for possível, tenta jogar a menor manilha.
+ - Se não tiver manilha, descarta sua menor carta comum.
+Se nada der certo, joga a primeira carta disponível.
+*/
+// Retorna o índice da carta jogada na mão do jogador
+// Se não conseguir jogar, retorna -1.
 int jogar_17018992(const Carta* mesa, int num_na_mesa) {
     atualiza_quantidade_de_manilhas();
 
@@ -148,7 +187,7 @@ int jogar_17018992(const Carta* mesa, int num_na_mesa) {
     // Se tem manilha na mesa
     if (manilha_na_mesa_idx >= 0) {
 
-        // Tenta jogar uma manilha melhor que a da mesa
+        // Tenta jogar uma manilha maior que a da mesa
         int melhor_manilha_na_mao_idx = -1;
         for (int i = 0; i < num_cartas_global; i++) {
             if (mao_global[i].valor == manilha_atual_global && cartas_jogadas[i] == 0) {
@@ -172,7 +211,7 @@ int jogar_17018992(const Carta* mesa, int num_na_mesa) {
         }
 
         // Se só tenho manilhas na mao, e todas sao menores que a da mesa
-        // Azar, aceita a derrota e joga a menor manilha
+        // Azar, aceito a derrota e jogo a menor manilha
         int menor_manilha_na_mao_idx = -1;
         for (int i = 0; i < num_cartas_global; i++) {
             if (mao_global[i].valor == manilha_atual_global && cartas_jogadas[i] == 0) {
@@ -218,7 +257,7 @@ int jogar_17018992(const Carta* mesa, int num_na_mesa) {
     }
 
 
-    // Se der merda, joga qualquer carta possivel
+    // Se nada der certo, joga qualquer carta possivel
     for (int i = 0; i < num_cartas_global; i++) {
         if (cartas_jogadas[i] == 0) {
             joga_carta(i);
