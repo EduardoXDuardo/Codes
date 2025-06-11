@@ -11,7 +11,7 @@ Implementação em C de um jogador automático para o jogo Curto (também conhec
 - Linguagem: C
 - Status: Finalizado
 
-### 2. [Java/squareRootMethods.java](Java/squareRootMethods)
+### 2. [Java/squareRootMethods](Java/squareRootMethods)
 **Descrição:**  
 Comparação de métodos numéricos para cálculo da raiz quadrada, utilizando Busca Binária e Newton-Raphson, implementados em Java. Inclui testes de performance e precisão entre as abordagens.
 
