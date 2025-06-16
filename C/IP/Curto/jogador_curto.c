@@ -118,13 +118,13 @@ int menor_carta_sem_ser_manilha(Carta* mao_jogador, int num_cartas_jogador) {
 
 // ===== // Funções do Jogador // ====== //
 
-// Retorna o ID do jogador
-const char* nome_jogador_17018992() {
+// Retorna o nome do jogador
+const char* nome_jogador() {
     return "Luiz Eduardo";
 }
 
 // Prepara o jogador para iniciar o jogo
-void iniciar_17018992(int meu_id, int total_jogadores) {
+void iniciar(int meu_id, int total_jogadores) {
     id_jogador_global = meu_id;
     num_jogadores_global = total_jogadores;
     // Reinicia o contador de cartas usadas
@@ -134,7 +134,7 @@ void iniciar_17018992(int meu_id, int total_jogadores) {
 }
 
 // Prepara a rodada para o jogador
-void nova_rodada_17018992(int rodada, Carta carta_virada, int n_cartas, Carta* minha_mao) {
+void nova_rodada(int rodada, Carta carta_virada, int n_cartas, Carta* minha_mao) {
     num_cartas_global = n_cartas;
 
     // Seta a manilha atual
@@ -158,7 +158,7 @@ void nova_rodada_17018992(int rodada, Carta carta_virada, int n_cartas, Carta* m
  Estrategia de jogo:
  Apostar a quantidade de manilhas que o jogador tem na mão.
 */
-int apostar_17018992(const int* apostas) {
+int apostar(const int* apostas) {
     atualiza_quantidade_de_manilhas();
     return quantidade_de_manilhas_minha_global;
 }
@@ -178,7 +178,7 @@ Se nada der certo, joga a primeira carta disponível.
 */
 // Retorna o índice da carta jogada na mão do jogador
 // Se não conseguir jogar, retorna -1.
-int jogar_17018992(const Carta* mesa, int num_na_mesa) {
+int jogar(const Carta* mesa, const int num_na_mesa, const int vitorias) {
     atualiza_quantidade_de_manilhas();
 
     int manilha_na_mesa_idx = manilha_mais_forte_da_mesa(mesa, num_na_mesa);

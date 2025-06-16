@@ -62,19 +62,19 @@ Estas funções dão suporte à lógica principal do bot, realizando operações
 
 Estas funções constituem a interface principal do bot e são chamadas diretamente pela simulação durante o jogo:
 
-- **`const char* nome_jogador_17018992()`**  
+- **`const char* nome_jogador()`**  
   Retorna o nome do jogador/bot.
 
-- **`void iniciar_17018992(int meu_id, int total_jogadores)`**  
+- **`void iniciar(int meu_id, int total_jogadores)`**  
   Inicializa variáveis globais e prepara o jogador para o início da partida.
 
-- **`void nova_rodada_17018992(int rodada, Carta carta_virada, int n_cartas, Carta* minha_mao)`**  
+- **`void nova_rodada(int rodada, Carta carta_virada, int n_cartas, Carta* minha_mao)`**  
   Prepara o estado do jogador para uma nova rodada, atualizando as cartas da mão, a manilha e reseta cartas jogadas.
 
-- **`int apostar_17018992(const int* apostas)`**  
+- **`int apostar(const int* apostas)`**  
   Decide quantas rodadas o bot pretende ganhar na rodada atual, de acordo com a estratégia abaixo
 
-- **`int jogar_17018992(const Carta* mesa, int num_na_mesa)`**  
+- **`int jogar(const Carta* mesa, const int num_na_mesa, const int vitorias)`**  
   Decide qual carta jogar na rodada, de acordo com a estratégia abaixo.
 
 ---
