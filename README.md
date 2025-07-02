@@ -4,7 +4,7 @@ Este diretório contém meus projetos pessoais de programação, desenvolvidos p
 
 ## Projetos
 
-### 1. [C/Exercicios-IP](C/Exercicios-IP)
+### 1. [C/IP/Exercicios](C/IP/Exercicios)
 **Descrição:** Coleção de exercícios resolvidos em C, da plataforma HackerRank, para a disciplina de Introdução à Programação. Os problemas cobrem desde conceitos básicos, como laços e funções, até o uso de ponteiros e estruturas de dados.
 
 - Linguagem: C
