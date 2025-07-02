@@ -1,19 +1,23 @@
 # Projetos Pessoais
 
-Este diretório contém meus projetos pessoais de programação, desenvolvidos para estudo, prática e diversão. Os projetos são escritos em diferentes linguagens e cobrem temas variados, como jogos e algoritmos matemáticos.
+Este diretório contém meus projetos pessoais de programação, desenvolvidos para estudo, prática e diversão. Os projetos são escritos em diferentes linguagens e cobrem temas variados, como jogos, algoritmos e soluções de problemas.
 
 ## Projetos
 
-### 1. [C/IP/Curto](C/IP/Curto)
-**Descrição:**  
-Implementação em C de um jogador automático para o jogo Curto (também conhecido como Fodinha), um jogo de cartas popular no Brasil. O programa simula estratégias para jogar partidas automaticamente.
+### 1. [C/Exercicios-IP](C/Exercicios-IP)
+**Descrição:** Coleção de exercícios resolvidos em C, da plataforma HackerRank, para a disciplina de Introdução à Programação. Os problemas cobrem desde conceitos básicos, como laços e funções, até o uso de ponteiros e estruturas de dados.
 
 - Linguagem: C
 - Status: Finalizado
 
-### 2. [Java/squareRootMethods](Java/squareRootMethods)
-**Descrição:**  
-Comparação de métodos numéricos para cálculo da raiz quadrada, utilizando Busca Binária e Newton-Raphson, implementados em Java. Inclui testes de performance e precisão entre as abordagens.
+### 2. [C/IP/Curto](C/IP/Curto)
+**Descrição:** Implementação em C de um jogador automático para o jogo Curto (também conhecido como Fodinha), um jogo de cartas popular no Brasil. O programa simula estratégias para jogar partidas automaticamente.
+
+- Linguagem: C
+- Status: Finalizado
+
+### 3. [Java/squareRootMethods](Java/squareRootMethods)
+**Descrição:** Comparação de métodos numéricos para cálculo da raiz quadrada, utilizando Busca Binária e Newton-Raphson, implementados em Java. Inclui testes de performance e precisão entre as abordagens.
 
 - Linguagem: Java
 - Status: Finalizado
